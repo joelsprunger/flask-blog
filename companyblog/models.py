@@ -1,8 +1,7 @@
-from datetime import datetime
-
 from . import db, login_manager
-from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime, timezone
 from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 @login_manager.user_loader
@@ -37,7 +36,7 @@ class BlogPost(db.Model):
     users = db.relationship(User)
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    date = db.Column(db.DateTime, nullable=False, datetime=datetime.utcnow)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
     title = db.Column(db.String(140), nullable=False)
     text = db.Column(db.Text, nullable=False)
 
