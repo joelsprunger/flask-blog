@@ -36,8 +36,9 @@ class RegistrationForm(FlaskForm):
 class UpdateUserForm(FlaskForm):
     username = StringField("User Name", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
-    file = FileField("Upload a profile picture", FileAllowed(["jpg", "png"]))
+    picture = FileField("Upload a profile picture", validators=[FileAllowed(["jpg", "png"])])
     submit = SubmitField("Update")
+
     @staticmethod
     def check_email(self, field):
         stmt = db.select(User).where(User.email == field.data)
