@@ -22,6 +22,7 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{ url_for('core.info') }}">About</a>
           </li>
+          {% if current_user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{ url_for('users.logout') }}">Logout</a>
           </li>
@@ -31,12 +32,14 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Create Post</a>
           </li>
+          {% else %}
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{ url_for('users.login') }}">Log In</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{ url_for('users.register') }}">Register</a>
           </li>
+          {% endif %}
         </ul>
       </div>
     </div>

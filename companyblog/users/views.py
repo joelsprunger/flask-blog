@@ -71,7 +71,14 @@ def logout():
     return redirect(url_for("core.index"))
 
 
-# # List blog posts
-# @app.route('/blog_posts')
-# def blog_posts():
-#     return render_template('blog_posts.html')
+# List blog posts
+@users.route('/<username>')
+def user_posts(username):
+    page = request.args.get("page", 1, type=int)
+    stmt = db.select(User).where(User.username == username)
+    user = db.session.execute(stmt).scalar_one_or_none()
+    if user is None:
+        pass  # 404 error
+    stmt = db.select(BlogPost).where(BlogPost.author == username).order_by(BlogPost.date.desc())
+    blog_posts = db.session.execute(stmt).scalars().paginate(page=page, per_page=5)
+    return render_template('user_blog_posts.html', blog_posts=blog_posts, user=user)
