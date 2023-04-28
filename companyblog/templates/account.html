@@ -2,7 +2,7 @@
 {% block content %}
   <h1>Welcome to the profile page for {{ current_user.username }}</h1>
   <img src="{{ profile_image }}">
-  <form method="POST">
+  <form method="POST" action="" enctype="multipart/form-data">
     {{form.hidden_tag()}}
     {{form.email.label}}{{form.email()}}<br>
     {{form.username.label}}{{form.username()}}<br>

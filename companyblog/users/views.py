@@ -47,7 +47,7 @@ def account():
     form = UpdateUserForm()
     if form.validate_on_submit():
         if form.picture.data:
-            username = current_user.username
+            username = form.username.data
             pic = add_profile_pic(form.picture.data, username)
             current_user.profile_image = pic
         current_user.username = form.username.data

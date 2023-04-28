@@ -36,7 +36,7 @@ class RegistrationForm(FlaskForm):
 class UpdateUserForm(FlaskForm):
     username = StringField("User Name", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
-    picture = FileField("Upload a profile picture", validators=[FileAllowed(["jpg", "png"])])
+    picture = FileField("Upload a profile picture", validators=[FileAllowed(["jpg", "jpeg", "png"])])
     submit = SubmitField("Update")
 
     @staticmethod
