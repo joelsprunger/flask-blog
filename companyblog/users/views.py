@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, request, Blueprint
+from flask import render_template, redirect, url_for, flash, request, Blueprint, abort
 from flask_login import login_user, current_user, logout_user, login_required
 from .. import db
 from .. models import User, BlogPost
@@ -78,7 +78,7 @@ def user_posts(username):
     stmt = db.select(User).where(User.username == username)
     user = db.session.execute(stmt).scalar_one_or_none()
     if user is None:
-        pass  # 404 error
+        abort(404)
     stmt = db.select(BlogPost).where(BlogPost.author == username).order_by(BlogPost.date.desc())
     blog_posts = db.session.execute(stmt).scalars().paginate(page=page, per_page=5)
     return render_template('user_blog_posts.html', blog_posts=blog_posts, user=user)
