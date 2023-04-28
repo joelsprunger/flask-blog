@@ -79,6 +79,6 @@ def user_posts(username):
     user = db.session.execute(stmt).scalar_one_or_none()
     if user is None:
         abort(404)
-    stmt = db.select(BlogPost).where(BlogPost.author == username).order_by(BlogPost.date.desc())
-    blog_posts = db.session.execute(stmt).scalars().paginate(page=page, per_page=5)
+    stmt = db.select(BlogPost).where(BlogPost.author == user).order_by(BlogPost.date.desc())
+    blog_posts = db.paginate(stmt, page=page, per_page=5)
     return render_template('user_blog_posts.html', blog_posts=blog_posts, user=user)
